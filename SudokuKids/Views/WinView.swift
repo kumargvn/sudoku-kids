@@ -35,6 +35,7 @@ struct WinView: View {
             Color.black.opacity(0.35).ignoresSafeArea()
             ConfettiView()
 
+            GeometryReader { geo in
             ScrollView {
                 VStack(spacing: 14) {
                     Text("🎉").font(.system(size: 60))
@@ -97,10 +98,10 @@ struct WinView: View {
                 .padding(24)
                 .scaleEffect(appeared ? 1 : 0.85)
                 .animation(.spring(response: 0.4, dampingFraction: 0.7), value: appeared)
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, minHeight: geo.size.height)
             }
             .scrollBounceBehavior(.basedOnSize)
-            .frame(maxHeight: .infinity)
+            }
         }
         .onAppear { appeared = true }
     }

@@ -23,22 +23,28 @@ struct GameView: View {
             } else {
                 VStack(spacing: 12) {
                     StatusBar(vm: vm)
+                    Spacer(minLength: 0)
                     BoardView(size: vm.size, cells: (0..<vm.geo.count).map { vm.cellState($0) }, symbols: vm.symbols) { index in
                         vm.select(index)
                     }
                     Spacer(minLength: 0)
-                    if let hint = vm.activeHint {
-                        HintCard(
-                            hint: hint,
-                            onSpeak: { vm.speakHint() },
-                            onApply: { vm.applyHint() },
-                            onDismiss: { vm.dismissHint() }
-                        )
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                    } else {
-                        ControlsView(vm: vm)
+                    // Fixed-height area: the hint card swaps in for the tools and number pad,
+                    // so the board never moves or resizes when a hint opens.
+                    VStack(spacing: 12) {
+                        if let hint = vm.activeHint {
+                            HintCard(
+                                hint: hint,
+                                onSpeak: { vm.speakHint() },
+                                onApply: { vm.applyHint() },
+                                onDismiss: { vm.dismissHint() }
+                            )
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                        } else {
+                            ControlsView(vm: vm)
+                            NumberPadView(vm: vm)
+                        }
                     }
-                    NumberPadView(vm: vm)
+                    .frame(minHeight: 190, alignment: .bottom)
                 }
                 .padding(.horizontal, 12)
                 .padding(.bottom, 8)
@@ -49,7 +55,7 @@ struct GameView: View {
             if let toast = vm.toast {
                 ToastView(text: toast)
                     .frame(maxHeight: .infinity, alignment: .top)
-                    .padding(.top, 60)
+                    .padding(.top, 4)
                     .transition(.move(edge: .top).combined(with: .opacity))
                     .task(id: toast) {
                         try? await Task.sleep(nanoseconds: 2_200_000_000)

@@ -231,7 +231,15 @@ final class ProgressStore: ObservableObject {
                 s.wins[k, default: 0] += 1
                 s.bestTimes[k] = min(s.bestTimes[k] ?? Int.max, seconds)
             }
-            s.totalStars += stars
+            // Replaying today's Daily Challenge or a finished adventure level adds no extra stars.
+            let replayingDaily = config.mode == .daily && config.dayKey.map { s.dailyDaysCompleted.contains($0) } == true
+            if replayingDaily {
+                // no stars
+            } else if config.mode == .adventure, let id = config.levelID {
+                s.totalStars += max(0, stars - (s.adventureStars[id] ?? 0))
+            } else {
+                s.totalStars += stars
+            }
             if mistakes == 0 && hintsUsed == 0 { s.perfectGames += 1 }
             if hintsUsed == 0 && (config.difficulty == .hard || config.difficulty == .expert) { s.noHintHardWins += 1 }
             if config.mode == .daily, let day = config.dayKey, !s.dailyDaysCompleted.contains(day) {

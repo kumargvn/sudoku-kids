@@ -129,6 +129,20 @@ final class EngineTests: XCTestCase {
     }
 
     @MainActor
+    func testReplaysDoNotAddExtraStars() {
+        let store = ProgressStore(defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!)
+        _ = store.recordWin(config: .daily(), seconds: 100, stars: 3, mistakes: 0, hintsUsed: 0)
+        _ = store.recordWin(config: .daily(), seconds: 90, stars: 3, mistakes: 0, hintsUsed: 0)
+        XCTAssertEqual(store.stats.totalStars, 3)
+        let level = Adventure.allLevels[0]
+        _ = store.recordWin(config: .adventure(level), seconds: 60, stars: 2, mistakes: 2, hintsUsed: 1)
+        _ = store.recordWin(config: .adventure(level), seconds: 60, stars: 2, mistakes: 2, hintsUsed: 1)
+        _ = store.recordWin(config: .adventure(level), seconds: 60, stars: 3, mistakes: 0, hintsUsed: 0)
+        XCTAssertEqual(store.stats.totalStars, 6)
+        XCTAssertEqual(store.stars(for: level), 3)
+    }
+
+    @MainActor
     func testDailyStreakCountsConsecutiveDays() {
         let store = ProgressStore(defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!)
         let today = Date()

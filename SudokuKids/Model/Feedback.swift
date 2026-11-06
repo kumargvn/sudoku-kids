@@ -78,7 +78,8 @@ final class SoundPlayer {
     }
 
     func play(_ effect: Effect) {
-        if !isReady { start() }
+        // The engine stops after interruptions such as a phone call; start it again when needed.
+        if !isReady || !engine.isRunning { start() }
         guard isReady, engine.isRunning, let buffer = buffers[effect] else { return }
         player.scheduleBuffer(buffer, at: nil, options: .interrupts, completionHandler: nil)
         if !player.isPlaying { player.play() }
