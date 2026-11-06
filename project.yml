@@ -44,7 +44,9 @@ targets:
         LSApplicationCategoryType: public.app-category.puzzle-games
         ITSAppUsesNonExemptEncryption: false
         UILaunchScreen:
-          UIColorName: AccentColor
+          UIColorName: LaunchBackground
+          UIImageName: Logo
+          UIImageRespectsSafeAreaInsets: true
         UIRequiresFullScreen: true
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait

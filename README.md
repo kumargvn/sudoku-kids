@@ -1,4 +1,6 @@
-# Sudoku Kids 🦉
+<p align="center"><img src="design/logo-rounded.png" width="160" alt="Sudoku Kids logo"></p>
+
+# Sudoku Kids
 
 A free, ad-free Sudoku app for iPhone and iPad that helps kids get excited about logic and numbers.
 
@@ -19,6 +21,8 @@ A free, ad-free Sudoku app for iPhone and iPad that helps kids get excited about
 - **Players**: up to 6 profiles, each with their own stars, trophies, saved game and settings
 - **Grown-ups area** behind a parental gate: progress per child, play time today and this week, a **break reminder**, edit/reset/remove players
 - Free, with no ads, no purchases, no accounts and no data collection. Everything stays on the device
+
+The logo source is `design/logo.svg`; `design/logo.png` is the 1024×1024 app icon.
 
 ## Project layout
 

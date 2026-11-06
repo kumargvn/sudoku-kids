@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Sudoku Kids logo: number blocks with the owl, "Night" colours -->
+  <rect width="1024" height="1024" fill="#29305C"/>
+  <g transform="translate(512 566) scale(0.86) rotate(-6) translate(-512 -512)">
+    <rect x="196" y="214" width="300" height="300" rx="56" fill="#1F63C9"/>
+    <rect x="196" y="196" width="300" height="300" rx="56" fill="#3D94F2"/>
+    <rect x="528" y="214" width="300" height="300" rx="56" fill="#D99A00"/>
+    <rect x="528" y="196" width="300" height="300" rx="56" fill="#FFC21C"/>
+    <rect x="196" y="546" width="300" height="300" rx="56" fill="#2E9452"/>
+    <rect x="196" y="528" width="300" height="300" rx="56" fill="#4DBF73"/>
+    <rect x="528" y="546" width="300" height="300" rx="56" fill="#C9CEE0"/>
+    <rect x="528" y="528" width="300" height="300" rx="56" fill="#FFFFFF"/>
+    <g fill="none" stroke-width="48" stroke-linecap="round" stroke-linejoin="round">
+      <path transform="translate(346 346)" stroke="#FFFFFF" d="M-34 -62 L14 -96 V96"/>
+      <path transform="translate(678 346)" stroke="#29305C" d="M-56 -44 Q-52 -96 0 -96 Q56 -96 56 -46 Q56 -10 16 26 L-56 94 H62"/>
+      <path transform="translate(346 678)" stroke="#FFFFFF" d="M-54 -70 Q-32 -96 4 -96 Q56 -96 56 -50 Q56 -8 2 -4 Q62 0 62 46 Q62 96 2 96 Q-36 96 -60 70"/>
+    </g>
+    <path d="M678 590 L702 646 L762 652 L716 692 L730 752 L678 720 L626 752 L640 692 L594 652 L654 646 Z" fill="#FA8C33"/>
+  </g>
+  <g transform="rotate(-6 625 278)">
+    <path d="M548 152 L552 82 L600 128 Z" fill="#F2A900"/>
+    <path d="M702 152 L698 82 L650 128 Z" fill="#F2A900"/>
+    <rect x="535" y="110" width="180" height="172" rx="82" fill="#FFC21C"/>
+    <rect x="556" y="150" width="62" height="62" rx="15" fill="#FFFFFF" stroke="#29305C" stroke-width="8"/>
+    <rect x="632" y="150" width="62" height="62" rx="15" fill="#FFFFFF" stroke="#29305C" stroke-width="8"/>
+    <path d="M618 181 H632" stroke="#29305C" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="591" cy="186" r="15" fill="#29305C"/>
+    <circle cx="659" cy="186" r="15" fill="#29305C"/>
+    <circle cx="596" cy="181" r="5" fill="#FFFFFF"/>
+    <circle cx="664" cy="181" r="5" fill="#FFFFFF"/>
+    <path d="M613 232 L637 232 L625 252 Z" fill="#FA8C33"/>
+    <circle cx="590" cy="283" r="11" fill="#FA8C33"/>
+    <circle cx="606" cy="280" r="11" fill="#FA8C33"/>
+    <circle cx="622" cy="283" r="11" fill="#FA8C33"/>
+    <circle cx="632" cy="283" r="11" fill="#FA8C33"/>
+    <circle cx="648" cy="280" r="11" fill="#FA8C33"/>
+    <circle cx="664" cy="283" r="11" fill="#FA8C33"/>
+  </g>
+</svg>

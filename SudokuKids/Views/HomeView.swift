@@ -120,7 +120,12 @@ struct HomeView: View {
 
     private var header: some View {
         VStack(spacing: 4) {
-            Text("🦉").font(.system(size: 64))
+            Image("Logo")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 96, height: 96)
+                .shadow(color: Theme.ink.opacity(0.25), radius: 10, y: 6)
+                .accessibilityHidden(true)
             Text("Sudoku Kids")
                 .font(Theme.font(38, .heavy))
                 .foregroundStyle(Theme.ink)
