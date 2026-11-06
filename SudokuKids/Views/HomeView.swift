@@ -182,6 +182,7 @@ struct HomeView: View {
             .shadow(color: Theme.entry.opacity(0.35), radius: 8, y: 4)
         }
         .buttonStyle(BouncyButtonStyle())
+        .accessibilityIdentifier("continueCard")
     }
 
     private func openDaily() {

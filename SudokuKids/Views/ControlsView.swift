@@ -20,6 +20,7 @@ struct ControlsView: View {
             }
             .disabled(!vm.canUseHint)
             .opacity(vm.canUseHint ? 1 : 0.4)
+            .accessibilityIdentifier("tool_hint")
         }
     }
 }
@@ -94,6 +95,7 @@ struct NumberPadView: View {
                 .buttonStyle(BouncyButtonStyle())
                 .disabled(done)
                 .accessibilityLabel("\(vm.symbols.spoken(digit)), \(left) left")
+                .accessibilityIdentifier("numpad_\(digit)")
             }
         }
     }

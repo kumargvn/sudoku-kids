@@ -66,15 +66,33 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.gudivada.sudokukids.tests
         GENERATE_INFOPLIST_FILE: YES
 
+  # Drives the real app in the simulator to capture the App Review screen recording
+  # (Home -> resume a puzzle -> use a hint -> finish -> win screen). Not run in CI
+  # otherwise; triggered by hand via the "App Store listing" workflow.
+  SudokuKidsUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: SudokuKidsUITests
+    dependencies:
+      - target: SudokuKids
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.gudivada.sudokukids.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: SudokuKids
+
 schemes:
   SudokuKids:
     build:
       targets:
         SudokuKids: all
         SudokuKidsTests: [test]
+        SudokuKidsUITests: [test]
     test:
       config: Debug
       targets:
         - SudokuKidsTests
+        - SudokuKidsUITests
     archive:
       config: Release
