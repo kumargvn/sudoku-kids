@@ -69,8 +69,25 @@ jobs:
           wait "$RECORD_PID" 2>/dev/null || true
           ls -la fastlane/review
 
-      - name: Save recording
+      - name: Save recording as a workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-review-demo-video
           path: fastlane/review/app-review-demo.mov
+
+      # Workflow artifacts download from Azure blob storage, which isn't reachable
+      # from every environment that drives this repo. Also push the video straight
+      # to github.com, on its own orphan branch, so it can be fetched with a plain
+      # git clone instead.
+      - name: Push recording to the app-review-demo branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan app-review-demo
+          git reset --hard
+          git clean -fd
+          mkdir -p recordings
+          cp fastlane/review/app-review-demo.mov recordings/app-review-demo.mov
+          git add recordings/app-review-demo.mov
+          git commit -m "App Review demo recording ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
+          git push -f origin HEAD:app-review-demo
