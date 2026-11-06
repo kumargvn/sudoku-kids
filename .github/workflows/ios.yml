@@ -49,6 +49,22 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             | tee xcodebuild.log
 
+      - name: Show build errors
+        if: failure()
+        run: |
+          # Turn compiler and test errors into annotations on the run page (10 lines each).
+          python3 - <<'EOF'
+          import re
+          lines = []
+          for line in open("xcodebuild.log", errors="replace"):
+              if re.search(r"error:|\*\* (BUILD|TEST) FAILED|Test Case .* failed|XCTAssert", line):
+                  line = line.strip().replace("/Users/runner/work/sudoku-kids/sudoku-kids/", "")
+                  if line not in lines:
+                      lines.append(line)
+          for k in range(0, min(len(lines), 80), 10):
+              print("::error title=Build errors " + str(k // 10 + 1) + "::" + "%0A".join(lines[k:k + 10]))
+          EOF
+
       - name: Upload log on failure
         if: failure()
         uses: actions/upload-artifact@v4
