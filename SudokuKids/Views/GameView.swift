@@ -112,6 +112,13 @@ struct GameView: View {
             if vm.isPlaying && progress.isBreakDue { showBreak = true }
         }
         .onAppear {
+            if let demo = DemoMode.current {
+                if demo == .hint {
+                    vm.requestHint()
+                } else if let cell = (0..<vm.geo.count).first(where: { !vm.isGiven($0) && vm.values[$0] == 0 }) {
+                    vm.select(cell)
+                }
+            }
             if vm.config.mode == .learn && !progress.stats.hasSeenTutorial {
                 showTutorial = true
                 progress.markTutorialSeen()

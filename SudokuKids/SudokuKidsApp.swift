@@ -2,12 +2,21 @@ import SwiftUI
 
 @main
 struct SudokuKidsApp: App {
-    @StateObject private var progress = ProgressStore()
+    @StateObject private var progress: ProgressStore
     @Environment(\.scenePhase) private var scenePhase
+
+    init() {
+        // Screenshot mode uses its own sample data; normal launches use the real store.
+        if let demo = DemoMode.current {
+            _progress = StateObject(wrappedValue: demo.makeStore())
+        } else {
+            _progress = StateObject(wrappedValue: ProgressStore())
+        }
+    }
 
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            HomeView(initialPath: DemoMode.current?.initialPath ?? [])
                 .environmentObject(progress)
                 .preferredColorScheme(.light)
                 .tint(Theme.entry)

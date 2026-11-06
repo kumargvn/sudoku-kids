@@ -9,6 +9,12 @@ struct HomeView: View {
     @State private var showGate = false
     @State private var gatePassed = false
     @State private var showParents = false
+    @State private var appliedInitialPath = false
+    private let initialPath: [Route]
+
+    init(initialPath: [Route] = []) {
+        self.initialPath = initialPath
+    }
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -75,6 +81,12 @@ struct HomeView: View {
                 ParentGateView { gatePassed = true }
             }
             .sheet(isPresented: $showParents) { ParentAreaView() }
+        }
+        .onAppear {
+            if !appliedInitialPath {
+                appliedInitialPath = true
+                path = initialPath
+            }
         }
     }
 
