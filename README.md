@@ -4,23 +4,28 @@ A free, ad-free Sudoku app for iPhone and iPad that helps kids get excited about
 
 ## What's inside
 
-- **Classic 9×9 Sudoku** with four levels: Easy 🐣, Medium 🐥, Hard 🦊, Expert 🦁
-- **Three modes**
-  - **Play**: pick a level, limited hints
-  - **Daily Challenge**: one new puzzle a day (the same for everyone), with a day streak 🔥
-  - **Learn to Play**: unlimited hints, and the number pad dims numbers that can't fit
-- **Hints that teach**: instead of just revealing an answer, a hint highlights the row, column or box and explains *why* only one number fits. Kids can try it themselves ("I'll try!") or have it filled in ("Show me").
-- Every puzzle has exactly one answer. Easy and Medium can always be solved with the beginner techniques the hints teach, so kids never hit a wall.
-- Notes (pencil marks), undo, erase, mistake highlighting, timer
-- Stars ⭐ for finishing with few hints and mistakes, confetti on every win
-- Progress and the current game are saved on the device. No accounts, no ads, no tracking, no data collection.
+- **Three board sizes**: 4×4 (Tiny), 6×6 (Junior) and 9×9 (Classic), each at Easy 🐣, Medium 🐥, Hard 🦊 and Expert 🦁
+- **Pictures or numbers**: play with numbers, animals, fruit, sea life or colours
+- **Modes**
+  - **Adventure** 🗺️: 5 themed worlds, 30 levels that unlock one by one, stars on every level
+  - **Play**: pick any size and level
+  - **Daily Challenge** 📅: one 9×9 puzzle a day, the same for everyone, with a day streak 🔥
+  - **Learn** 🦉: four short lessons (Last Number Left, Only Spot Left, Pointing Line, Twin Squares) with a real example and a quiz, plus practice games with unlimited hints
+- **Hints that teach**: a hint highlights the squares involved and explains *why* the answer fits. It points out mistakes first, uses the four techniques, and can **read itself out loud**
+- Every puzzle has exactly one answer. Easy and Medium only need the two beginner techniques; Hard can always be solved with all four
+- Notes, **Auto notes**, undo, erase, timer, stars, confetti, sounds and vibration
+- **17 trophies** to collect
+- **Settings**: show mistakes right away or only at the end, optional **3-mistake challenge**, read hints aloud, sounds, vibration
+- **Players**: up to 6 profiles, each with their own stars, trophies, saved game and settings
+- **Grown-ups area** behind a parental gate: progress per child, play time today and this week, a **break reminder**, edit/reset/remove players
+- Free, with no ads, no purchases, no accounts and no data collection. Everything stays on the device
 
 ## Project layout
 
 ```
 SudokuKids/
-  Engine/        Puzzle generator, solver, hint engine (pure Swift, unit tested)
-  Model/         Game state, progress storage, haptics
+  Engine/        Grid sizes, generator, solvers, hints, lessons, adventure, trophies (pure Swift, unit tested)
+  Model/         Game state, profiles and progress storage, sounds, speech, haptics
   Views/         SwiftUI screens
   Assets.xcassets
 SudokuKidsTests/ Unit tests for the engine

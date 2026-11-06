@@ -2,18 +2,27 @@ import SwiftUI
 
 struct HintCard: View {
     let hint: Hint
+    let onSpeak: () -> Void
     let onApply: () -> Void
     let onDismiss: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 10) {
-                Text(hint.isMistake ? "🙈" : "💡")
-                    .font(.system(size: 30))
+                Text(hint.isMistake ? "🙈" : (hint.technique?.emoji ?? "💡"))
+                    .font(.system(size: 28))
                 Text(hint.title)
                     .font(Theme.font(19, .heavy))
                     .foregroundStyle(Theme.ink)
                 Spacer(minLength: 0)
+                Button(action: onSpeak) {
+                    Image(systemName: "speaker.wave.2.fill")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundStyle(Theme.entry)
+                        .frame(width: 38, height: 38)
+                        .background(Theme.card, in: Circle())
+                }
+                .accessibilityLabel("Read it to me")
             }
 
             Text(hint.message)
@@ -43,9 +52,6 @@ struct HintCard: View {
         }
         .padding(16)
         .background(Theme.hintFocus, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(Theme.star, lineWidth: 2)
-        )
+        .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(Theme.star, lineWidth: 2))
     }
 }

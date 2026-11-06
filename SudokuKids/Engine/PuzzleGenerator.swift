@@ -1,56 +1,47 @@
 import Foundation
 
 enum PuzzleGenerator {
-    /// Builds a puzzle with exactly one solution.
-    /// Easy and Medium puzzles are also guaranteed to be solvable with
-    /// "only one number fits" reasoning, which is what the hints explain.
-    static func generate(difficulty: Difficulty, seed: UInt64? = nil) -> Puzzle {
+    /// Builds a puzzle with exactly one answer that fits the level's rule.
+    static func generate(size: GridSize, difficulty: Difficulty, seed: UInt64? = nil) -> Puzzle {
         var rng = SeededGenerator(seed: seed ?? UInt64.random(in: UInt64.min...UInt64.max))
         var best: Puzzle?
         for _ in 0..<8 {
-            let candidate = attempt(difficulty: difficulty, rng: &rng)
-            if candidate.clueCount <= difficulty.targetClues { return candidate }
+            let candidate = attempt(size: size, difficulty: difficulty, rng: &rng)
+            if candidate.clueCount <= difficulty.targetClues(for: size) { return candidate }
             if best == nil || candidate.clueCount < best!.clueCount { best = candidate }
         }
         return best!
     }
 
-    private static func attempt(difficulty: Difficulty, rng: inout SeededGenerator) -> Puzzle {
-        var solution = [Int](repeating: 0, count: Sudoku.cellCount)
-        _ = SudokuSolver.fillRandom(&solution, using: &rng)
+    private static func attempt(size: GridSize, difficulty: Difficulty, rng: inout SeededGenerator) -> Puzzle {
+        let geo = size.geometry
+        let target = difficulty.targetClues(for: size)
+        var solution = [Int](repeating: 0, count: geo.count)
+        _ = SudokuSolver.fillRandom(&solution, geo: geo, using: &rng)
 
         var givens = solution
-        var clues = Sudoku.cellCount
-        let order = Array(0..<Sudoku.cellCount).shuffled(using: &rng)
+        var clues = geo.count
+        let order = Array(0..<geo.count).shuffled(using: &rng)
 
         for index in order {
-            if clues <= difficulty.targetClues { break }
+            if clues <= target { break }
             let backup = givens[index]
             givens[index] = 0
 
-            // Beginner logic always leads to a single answer, so it also proves uniqueness.
-            let keepRemoved = difficulty.requiresBeginnerLogic
-                ? LogicSolver.solvableWithSingles(givens)
-                : SudokuSolver.countSolutions(givens, limit: 2) == 1
+            // Logic solving always reaches the single answer, so it also proves uniqueness.
+            let keep: Bool
+            switch difficulty.rule {
+            case .placementsOnly: keep = LogicSolver.isSolvable(givens, geo: geo, allowEliminations: false)
+            case .allTechniques: keep = LogicSolver.isSolvable(givens, geo: geo, allowEliminations: true)
+            case .uniqueOnly: keep = SudokuSolver.countSolutions(givens, geo: geo, limit: 2) == 1
+            }
 
-            if keepRemoved {
+            if keep {
                 clues -= 1
             } else {
                 givens[index] = backup
             }
         }
-        return Puzzle(givens: givens, solution: solution, difficulty: difficulty)
-    }
-}
-
-/// Human-style solving with the two beginner techniques.
-enum LogicSolver {
-    static func solvableWithSingles(_ grid: [Int]) -> Bool {
-        var work = grid
-        while work.contains(0) {
-            guard let step = HintEngine.findSingle(in: work) else { return false }
-            work[step.cell] = step.value
-        }
-        return true
+        return Puzzle(size: size, givens: givens, solution: solution, difficulty: difficulty)
     }
 }
